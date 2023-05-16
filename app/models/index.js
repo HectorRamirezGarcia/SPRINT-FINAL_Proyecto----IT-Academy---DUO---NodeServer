@@ -22,5 +22,7 @@ db.sequelize = sequelize;
 db.users = require("./users.model.js")(sequelize, Sequelize);
 db.games = require("./games.model.js")(sequelize, Sequelize);
 db.gameslikeds = require("./gameslikeds.model.js")(sequelize, Sequelize);
+db.idioms = require("./idioms.model.js")(sequelize, Sequelize);
+db.status = require("./status.model.js")(sequelize, Sequelize);
 
 module.exports = db;

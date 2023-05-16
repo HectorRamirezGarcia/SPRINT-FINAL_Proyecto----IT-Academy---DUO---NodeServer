@@ -3,7 +3,7 @@ const db = require("../models");
 const Game = db.games;
 const Op = db.Sequelize.Op;
 
-// Retrieve all Users from the database.
+// Retrieve all Game from the database.
 exports.findAll = (req, res) => {
 
     Game.findAll({

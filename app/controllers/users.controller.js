@@ -19,6 +19,7 @@ exports.create = async (req, res) => {
     password: pwencrypt,
     emailverified: false,
     userverified: false,
+    status_id: 3,
     description: req.body.description,
     city: req.body.city,
     province: req.body.province
@@ -61,7 +62,6 @@ exports.loggin = (req, res) => {
 
   User.findOne({ where: {email : email}}).then(async data => {
     const cresult = await crypt.comparepw(password, data.password);
-    console.log(cresult);
     if (cresult == true) {
       res.send("Logged successfull.")
     } else {
@@ -74,27 +74,24 @@ exports.loggin = (req, res) => {
       message: err
     })
   })
-
-
 }
 
 // Find a single User with an id
-exports.findOne = (req, res) => {
-  const id = req.params.id;
-
-  User.findByPk(id)
+exports.findOne = async (req, res) => {
+  const email = await req.params.email;
+  User.findOne({ where: {email : email}})
     .then(data => {
       if (data) {
         res.send(data);
       } else {
         res.status(404).send({
-          message: `Cannot find User with id=${id}.`
+          message: `Cannot find User with email=${email}.`
         });
       }
     })
     .catch(err => {
       res.status(500).send({
-        message: "Error retrieving User with id=" + id
+        message: "Error retrieving User with email=" + email
       });
     });
 };
@@ -102,7 +99,6 @@ exports.findOne = (req, res) => {
 // Update a User by the id in the request
 exports.update = (req, res) => {
   const id = req.params.id;
-
   User.update(req.body, {
     where: { id: id }
   })
@@ -113,13 +109,13 @@ exports.update = (req, res) => {
         });
       } else {
         res.send({
-          message: `Cannot update User with id=${id}. Maybe Tutorial was not found or req.body is empty!`
+          message: `Cannot update User with id=${id}. Maybe Tutorial was not found or req.body is empty!`,
         });
       }
     })
     .catch(err => {
       res.status(500).send({
-        message: "Error updating User with id=" + id
+        message: "Error updating User with id=" + id + err
       });
     });
 };

@@ -14,6 +14,9 @@ app.use(express.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
+app.use(express.static('public'));
+app.use('/images', express.static('images'));
+
 // try to sync the db
 const db = require("./app/models");
 db.sequelize.sync()
@@ -32,6 +35,9 @@ require("./app/routes/users.routes")(app);
 require("./app/routes/uploads.routes")(app);
 require("./app/routes/games.routes")(app);
 require("./app/routes/gameslikeds.routes")(app);
+require("./app/routes/idioms.routes")(app);
+require("./app/routes/status.routes")(app);
+
 
 
 // set port, listen for requests

@@ -26,26 +26,23 @@ exports.create = async (req, res) => {
       });
     });
 
-  for (let i = 0; i < req.body.games.length; i++) {
-    console.log("entro una = " + i)
-  }
-
-
-  const gamesliked = {
-    user_id: parseInt(id_user),
-    game_id: req.body.games[counts].id,
-  };
-  counts++
-  GamesLikeds.create(gamesliked)
-    .then(data => {
-      res.send(data);
-    })
-    .catch(err => {
-      res.status(500).send({
-        message:
-          err.message + "body == " + req.body || "Some error occurred while creating the User. body == " + req.body
+    const gamesliked = {
+      user_id: parseInt(id_user),
+      game_id: req.body.games[counts].id,
+    };
+    if (counts != req.body.games.length) {
+      counts++;
+    }
+    GamesLikeds.create(gamesliked)
+      .then(data => {
+        res.send(data);
+      })
+      .catch(err => {
+        res.status(500).send({
+          message:
+            err.message + "body == " + req.body || "Some error occurred while creating the User. body == " + req.body
+        });
       });
-    });
-
+  
 
 };

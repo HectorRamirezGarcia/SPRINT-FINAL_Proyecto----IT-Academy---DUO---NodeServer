@@ -56,6 +56,9 @@ module.exports = (sequelize, Sequelize) => {
       userverified: {
         type: Sequelize.BOOLEAN
       },
+      status_id: {
+        type: Sequelize.INTEGER
+      },
       description: {
         type: Sequelize.STRING
       },
